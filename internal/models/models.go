@@ -30,10 +30,37 @@ type Booking struct {
 	VenueID      uint      `gorm:"index" json:"venue_id"`
 	CustomerName string    `gorm:"size:64" json:"customer_name"`
 	Phone        string    `gorm:"size:32" json:"phone"`
-	BookDate     string    `gorm:"size:10;index" json:"book_date"` // YYYY-MM-DD
+	BookDate     string    `gorm:"size:10;index" json:"book_date"`
 	StartHour    int       `json:"start_hour"`
 	EndHour      int       `json:"end_hour"`
 	Amount       float64   `json:"amount"`
-	Status       string    `gorm:"size:16" json:"status"` // booked / cancelled / completed
+	Status       string    `gorm:"size:16" json:"status"`
 	CreatedAt    time.Time `json:"created_at"`
+}
+
+type RevenueItem struct {
+	ID        uint      `gorm:"primaryKey" json:"id"`
+	BookingID uint      `gorm:"index" json:"booking_id"`
+	VenueID   uint      `gorm:"index" json:"venue_id"`
+	VenueName string    `gorm:"size:128" json:"venue_name"`
+	SportType string    `gorm:"size:32;index" json:"sport_type"`
+	Type      string    `gorm:"size:32;index" json:"type"`
+	Amount    float64   `json:"amount"`
+	Date      string    `gorm:"size:10;index" json:"date"`
+	Hour      int       `json:"hour"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
+type StatHourly struct {
+	ID             uint    `gorm:"primaryKey" json:"id"`
+	VenueID        uint    `gorm:"index:idx_stat_venue" json:"venue_id"`
+	VenueName      string  `gorm:"size:128" json:"venue_name"`
+	SportType      string  `gorm:"size:32;index:idx_stat_sport" json:"sport_type"`
+	Date           string  `gorm:"size:10;index:idx_stat_date" json:"date"`
+	Hour           int     `gorm:"index:idx_stat_hour" json:"hour"`
+	Weekday        int     `json:"weekday"`
+	TotalSlots     int     `json:"total_slots"`
+	BookedSlots    int     `json:"booked_slots"`
+	Revenue        float64 `json:"revenue"`
+	CancelledSlots int     `json:"cancelled_slots"`
 }

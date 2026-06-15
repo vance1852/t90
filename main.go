@@ -53,6 +53,8 @@ func main() {
 			secured.PATCH("/bookings/:id/status", h.UpdateBookingStatus)
 
 			secured.GET("/dashboard/stats", h.DashboardStats)
+
+			handlers.RegisterAnalyticsRoutes(secured, database)
 		}
 	}
 
